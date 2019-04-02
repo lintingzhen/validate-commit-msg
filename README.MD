@@ -26,6 +26,6 @@ $ make
 
 - Step 4: install commit-msg hook
 ```
-$ ./validate-commit-msg -i 
+$ validate-commit-msg -i 
 ```
 
