@@ -15,12 +15,22 @@ func main() {
     var args Arguments
     ParseArgs(&args)
 
+    // open debug switch
+    if args.debug {
+        log.SetFlags(log.Lshortfile | log.LstdFlags)
+    } else {
+        log.SetFlags(0)
+        log.SetOutput(ioutil.Discard)
+    }
+
     if args.install {
         // exit if not git directory
         ExitIfNotGitDirectory()
 
         // copy to .git/hooks/commit-msg
         HookCommitMsg()
+
+        fmt.Println("Install git commit-msg hook success.")
         return 
     }
 

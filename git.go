@@ -107,8 +107,12 @@ func InstallSubcommand() (string, error) {
 }
 
 func HookCommitMsg() {
-    srcName := os.Args[0]
-    dstName := filepath.Join(filepath.Dir(srcName), ".git", "hooks", "commit-msg")
+    srcName, err := exec.LookPath(os.Args[0])
+    if err != nil {
+        os.Exit(1)
+    }
+    dstName := filepath.Join(".git", "hooks", "commit-msg")
+    log.Printf("src=%s, dst=%s\n", srcName, dstName)
     if _, err := copyFile(dstName, srcName); err != nil {
         fmt.Println("Hook commit msg failed: %q\n", err)
         os.Exit(1)
